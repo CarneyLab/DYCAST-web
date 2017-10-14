@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2002
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dycast-web", "dycast-web\dycast-web.csproj", "{36E928E2-2782-484E-B7EB-DB0B80284358}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{6618CF5E-4C94-44F0-B2F1-4CDC3F9579FA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{36E928E2-2782-484E-B7EB-DB0B80284358}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36E928E2-2782-484E-B7EB-DB0B80284358}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36E928E2-2782-484E-B7EB-DB0B80284358}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36E928E2-2782-484E-B7EB-DB0B80284358}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6618CF5E-4C94-44F0-B2F1-4CDC3F9579FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6618CF5E-4C94-44F0-B2F1-4CDC3F9579FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6618CF5E-4C94-44F0-B2F1-4CDC3F9579FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6618CF5E-4C94-44F0-B2F1-4CDC3F9579FA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5BE7F224-0673-4BF9-A0F0-6B70CA9A352D}
+	EndGlobalSection
+EndGlobal

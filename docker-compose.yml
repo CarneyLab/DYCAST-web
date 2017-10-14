@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  dycast-web:
+    image: dycast-web
+    build:
+      context: ./dycast-web
+      dockerfile: Dockerfile
