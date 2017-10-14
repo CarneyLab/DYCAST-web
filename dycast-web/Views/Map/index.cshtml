@@ -1,0 +1,60 @@
+﻿@model string
+
+<script src='https://api.mapbox.com/mapbox-gl-js/v0.40.0/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v0.40.0/mapbox-gl.css' rel='stylesheet' />
+
+
+@{
+    ViewData["Title"] = "Dycast map";
+}
+
+<div id='map' style='width: 100%; height: 60vh; margin-top: 140px;'></div>
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoiY3Zhc3QiLCJhIjoiY2l5bmN3eTRsMDAweDRlcGZmeHlldjFjZSJ9.jcrrLVsU52pZ0ySw_pQlDw';
+
+    var map = new mapboxgl.Map({
+        container: 'map',
+        center: [-87.637596, 41.940403],
+        zoom: 13,
+        style: 'mapbox://styles/mapbox/streets-v9'
+    });
+
+
+    map.on('click', function (e) {
+        var features = map.queryRenderedFeatures(e.point, {
+            layers: ['points']
+        });
+
+        if (!features.length) {
+            return
+        }
+
+        var feature = features[0];
+
+        var popup = new mapboxgl.Popup({ offset: [0, -15] })
+            .setLngLat(feature.geometry.coordinates)
+            .setHTML('<h3>' + feature.properties.title + '</h3><p>' +
+            feature.properties.pValue + '</p>')
+            .addTo(map)
+    });
+
+
+    map.on('load', function () {
+
+        map.addSource('riskGeoJson', {
+            type: 'geojson',
+            data: '/Map/GetRisk'
+        });
+
+
+        map.addLayer({
+            "id": "points",
+            "type": "circle",
+            "source": "riskGeoJson",
+            "paint": {
+                "circle-stroke-color": "white",
+                "circle-stroke-width": 1,
+            }
+        });
+    });
+</script>
