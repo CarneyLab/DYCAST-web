@@ -55,8 +55,15 @@
                 'type': 'circle',
                 'source': 'riskGeoJson',
                 'paint': {
-                    'circle-stroke-color': 'white',
-                    'circle-stroke-width': 1,
+                    'circle-color': {
+                        property: 'pValue',
+                        stops: [
+                            [0.00001, '#FC0908'],
+                            [1, '#FCA107']
+                        ]
+                    },
+                    'circle-opacity': 0.75,
+                    'circle-radius': 5
                 }
             });
 
