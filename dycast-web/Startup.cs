@@ -29,6 +29,9 @@ namespace dycast_web
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddEntityFrameworkNpgsql().AddDbContext<DycastDbContext>(options =>
+                options.UseNpgsql(Configuration.GetConnectionString("DycastConnection")));
+
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
