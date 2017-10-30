@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <UserSecretsId>aspnet-dycast_web-2F451C75-977B-47A0-BD3A-A599AF732804</UserSecretsId>
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+    <RootNamespace>dycast_web</RootNamespace>
   </PropertyGroup>
 
 
