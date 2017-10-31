@@ -34,15 +34,15 @@
 
         var popup = new mapboxgl.Popup({ offset: [0, -15] })
             .setLngLat(feature.geometry.coordinates)
-            .setHTML('<h3>' + feature.properties.title + '</h3><p>' +
-            feature.properties.pValue + '</p>')
+            .setHTML('<h3>' + feature.properties.date + '</h3>' +
+            '<p>p-value: ' + feature.properties.pValue + '</p>'
             .addTo(map)
     });
 
 
     map.on('load', function () {
 
-        d3.json('/Map/GetRisk', function (err, data) {
+        d3.json('/api/Risk', function (err, data) {
 
             map.addSource('riskGeoJson', {
                 type: 'geojson',
