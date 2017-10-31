@@ -2,7 +2,6 @@
 using dycast_web.Data;
 using dycast_web.Models.ViewModels.DycastViewModels;
 using GeoJSON.Net.Feature;
-using GeoJSON.Net.Geometry;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -30,7 +29,7 @@ namespace dycast_web.Services
             return await GetRisk(DateTime.MinValue, DateTime.MaxValue);
         }
 
-        public async Task<FeatureCollection> GetRisk(DateTime fromDate, DateTime toDate)
+        public async Task<FeatureCollection> GetRisk(DateTime? fromDate, DateTime? toDate)
         {
             var points = await _context.Risk.Select(r => new RiskPointViewModel
             {

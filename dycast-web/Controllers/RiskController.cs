@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using dycast_web.Data;
-using dycast_web.Models.Entities;
 using dycast_web.Services;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using dycast_web.Models.ViewModels.DycastViewModels;
 using GeoJSON.Net.Feature;
+using System.Net.Http;
+using System.Net;
+using System.Net.Http.Headers;
 
 namespace dycast_web.Controllers
 {
@@ -26,12 +21,36 @@ namespace dycast_web.Controllers
             _context = context;
         }
 
-        // GET: api/Risk
+
+        // GET: api/Risk/?fromDate={0}&toDate={1}
         [HttpGet]
-        public async Task<FeatureCollection> GetRiskAsync()
+        public async Task<IActionResult> GetRisk(DateTime? fromDate=null, DateTime? toDate=null)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var riskService = new RiskService(_context);
-            return await riskService.GetRisk();
+            var risk = new FeatureCollection();
+
+
+            if (fromDate != null && toDate != null)
+            {
+                risk = await riskService.GetRisk(fromDate, toDate);
+            }
+            else
+            {
+                risk = await riskService.GetRisk();
+            }
+
+            if (risk == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(risk);
+        }
         }
     }
 }

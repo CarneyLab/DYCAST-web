@@ -1,10 +1,7 @@
-﻿using DotSpatial.Projections;
-using GeoJSON.Net.Feature;
+﻿using GeoJSON.Net.Feature;
 using GeoJSON.Net.Geometry;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace dycast_web.Models.ViewModels.DycastViewModels
 {
@@ -27,7 +24,7 @@ namespace dycast_web.Models.ViewModels.DycastViewModels
 
             var featureProperties = new Dictionary<string, object>
                 {
-                    { "date", RiskDate },
+                    { "date", RiskDate.ToString("yyyy-MM-dd") },
                     { "pValue", PValue },
                     //{ "numCases", NumCases },
                     //{ "closePairs", ClosePairs },

@@ -4,14 +4,26 @@
 <link href='//api.mapbox.com/mapbox-gl-js/v0.41.0/mapbox-gl.css' rel='stylesheet' />
 <script src='//api.mapbox.com/mapbox.js/plugins/geojson-extent/v0.0.1/geojson-extent.js'></script>
 <script src='//d3js.org/d3.v3.min.js' charset='utf-8'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.js'></script>
+
+
 
 @{
     ViewData["Title"] = "Dycast map";
 }
 
 <div id='map' style='width: 100%; height: 60vh; margin-top: 140px;'></div>
+<div id="slider">
+    <h3>Loading data...</h3>
+    <input type="range" min="1" max="100" step="1" />
+</div>
+
+
 <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoiY3Zhc3QiLCJhIjoiY2l5bmN3eTRsMDAweDRlcGZmeHlldjFjZSJ9.jcrrLVsU52pZ0ySw_pQlDw';
+
+    var earliestDate = new Date('2016-03-01T00:00:00');
+    var latestDate = new Date('2016-03-03T00:00:00');
 
     var map = new mapboxgl.Map({
         container: 'map',
@@ -20,6 +32,14 @@
         style: 'mapbox://styles/mapbox/streets-v9'
     });
 
+
+    function filterByDate(date) {
+        dateString = moment(date).format('YYYY-MM-DD');
+
+        $('#slider h3').html(dateString);
+        var filter = ['==', 'date', dateString];
+        map.setFilter('points', filter);
+    }
 
     map.on('click', function (e) {
         var features = map.queryRenderedFeatures(e.point, {
@@ -42,8 +62,7 @@
 
     map.on('load', function () {
 
-        d3.json('/api/Risk', function (err, data) {
-
+        d3.json("/api/Risk?fromDate=2016-03-01&toDate=2016-03-03", function (err, data) {
             map.addSource('riskGeoJson', {
                 type: 'geojson',
                 data: data
@@ -122,8 +141,23 @@
                 }
             }, 'points');
 
-            var bounds = geojsonExtent(data);
 
+            $('#slider input')
+                .attr('min', Date.parse(earliestDate))
+                .attr('max', Date.parse(latestDate))
+                .attr('step', 86400000);
+
+            $('#slider input').on('change', function () {
+                var selectedDateValue = $('#slider input')[0].value;
+                selectedDate = new Date(+selectedDateValue);
+
+                filterByDate(selectedDate);
+            });
+
+            filterByDate(earliestDate);
+
+
+            var bounds = geojsonExtent(data);
             map.fitBounds(bounds, { padding: 50 });
 
         });
