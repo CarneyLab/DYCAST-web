@@ -9,13 +9,16 @@
 
 
 @{
-    ViewData["Title"] = "Dycast map";
+    ViewData["Title"] = "Dycast Map";
 }
 
-<div id='map' style='width: 100%; height: 60vh; margin-top: 140px;'></div>
-<div id="slider">
-    <h3>Loading data...</h3>
-    <input type="range" min="1" max="100" step="1" />
+<div style="margin-top: 10vh; text-align: center">
+    <h2 class="title">@ViewData["Title"]</h2>
+    <div id='map' style='width: 100%; height: 60vh; text-align: left;'></div>
+    <div id="slider">
+        <h3>Loading data...</h3>
+        <input type="range" min="1" max="100" step="1" />
+    </div>
 </div>
 
 
@@ -29,7 +32,7 @@
         container: 'map',
         center: [-45.81495207762998, -21.694545860417424],
         zoom: 13,
-        style: 'mapbox://styles/mapbox/streets-v9'
+        style: 'mapbox://styles/mapbox/outdoors-v9'
     });
 
 

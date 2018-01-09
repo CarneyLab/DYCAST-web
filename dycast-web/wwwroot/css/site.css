@@ -1,6 +1,9 @@
-﻿body {
+﻿@import url(https://fonts.googleapis.com/css?family=Roboto+Slab);
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
+    font-family: 'Roboto Slab', serif;
 }
 
 /* Wrapping element */
@@ -32,4 +35,9 @@
     .carousel-caption {
         display: none;
     }
+}
+
+/* Mapbox */
+.mapboxgl-popup {
+    font-family: 'Roboto Slab', serif;
 }
