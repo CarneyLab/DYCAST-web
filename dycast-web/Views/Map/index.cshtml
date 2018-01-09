@@ -62,7 +62,7 @@
 
     map.on('load', function () {
 
-        d3.json("/api/Risk?fromDate=2016-03-01&toDate=2016-03-03", function (err, data) {
+        d3.json(`/api/Risk?fromDate=${earliestDate.toDateString()}&toDate=${latestDate.toDateString()}`, function (err, data) {
             map.addSource('riskGeoJson', {
                 type: 'geojson',
                 data: data
