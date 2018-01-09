@@ -51,6 +51,5 @@ namespace dycast_web.Controllers
 
             return Ok(risk);
         }
-        }
     }
 }
