@@ -147,7 +147,7 @@
                 .attr('max', Date.parse(latestDate))
                 .attr('step', 86400000);
 
-            $('#slider input').on('change', function () {
+            $('#slider input').on('input', function () {
                 var selectedDateValue = $('#slider input')[0].value;
                 selectedDate = new Date(+selectedDateValue);
 
