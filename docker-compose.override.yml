@@ -4,5 +4,6 @@ services:
   dycast-web:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - MAPBOX_ACCESS_TOKEN=
     ports:
       - "80"

@@ -1,21 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using GeoJSON.Net.Feature;
-using GeoJSON.Net.Geometry;
-using DotSpatial.Projections;
-using System.Diagnostics;
+using dycast_web.Models;
+using Microsoft.Extensions.Options;
 
 namespace dycast_web.Controllers
 {
     public class MapController : Controller
     {
+        private readonly MapboxSettings _mapboxSettings;
+
+        public MapController(IOptions<MapboxSettings> mapboxSettings)
+        {
+            _mapboxSettings = mapboxSettings.Value;
+        }
+
         public IActionResult Index()
         {
+            ViewData["MapboxAccessToken"] = Environment.ExpandEnvironmentVariables(_mapboxSettings.AccessToken);
             return View();
         }
     }
