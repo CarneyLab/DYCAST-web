@@ -13,8 +13,15 @@
 }
 
 <div style="margin-top: 10vh; text-align: center">
-    <h2 class="title">@ViewData["Title"]</h2>
-    <div id='map' style='width: 100%; height: 60vh; text-align: left;'></div>
+    <div style="margin-bottom: 10px;">
+        <h2 class="title">@ViewData["Title"]</h2>
+        <input id="fromDate" type="date" value="" />
+        <input id="toDate" type="date" value="" />
+        <input type="button" value="Go" onclick="updateMap()" />
+    </div>
+    <div>
+        <div id='map' style='width: 100%; height: 60vh; text-align: left;'></div>
+    </div>
     <div id="slider">
         <h3>Loading data...</h3>
         <input type="range" min="1" max="100" step="1" />
@@ -25,8 +32,6 @@
 <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoiY3Zhc3QiLCJhIjoiY2l5bmN3eTRsMDAweDRlcGZmeHlldjFjZSJ9.jcrrLVsU52pZ0ySw_pQlDw';
 
-    var earliestDate = new Date('2016-03-01T00:00:00');
-    var latestDate = new Date('2016-03-03T00:00:00');
 
     var map = new mapboxgl.Map({
         container: 'map',
@@ -42,7 +47,49 @@
         $('#slider h3').html(dateString);
         var filter = ['==', 'date', dateString];
         map.setFilter('points', filter);
+
+
+    function setSliderEvent() {
+        $('#slider input').on('input', function () {
+            var selectedDateValue = $('#slider input')[0].value;
+            selectedDate = new Date(+selectedDateValue);
+
+            filterByDate(selectedDate);
+        });
     }
+
+
+    function setSliderValues(fromDate, toDate) {
+        $('#slider input')
+            .attr('min', Date.parse(fromDate))
+            .attr('max', Date.parse(toDate))
+            .attr('step', 86400000);
+    }
+
+
+    function setDatePickerValues(fromDate, toDate) {
+        $('#fromDate').val(moment(fromDate).format('YYYY-MM-DD'));
+        $('#toDate').val(moment(toDate).format('YYYY-MM-DD'));
+    }
+
+
+    function updateMap() {
+        var fromDate = new Date($('#fromDate').val());
+        var toDate = new Date($('#toDate').val());
+
+        d3.json(`/api/Risk?fromDate=${fromDate.toDateString()}&toDate=${toDate.toDateString()}`, function (err, data) {
+            const source = map.getSource('riskGeoJson');
+            source.setData(data);
+            var bounds = geojsonExtent(data);
+            map.fitBounds(bounds, { padding: 50 });
+        });
+        setSliderValues(fromDate, toDate);
+        filterByDate(fromDate);
+    }
+
+
+
+    // Map events
 
     map.on('click', function (e) {
         var features = map.queryRenderedFeatures(e.point, {
@@ -65,7 +112,10 @@
 
     map.on('load', function () {
 
-        d3.json(`/api/Risk?fromDate=${earliestDate.toDateString()}&toDate=${latestDate.toDateString()}`, function (err, data) {
+        var fromDate = new Date('2016-03-09');
+        var toDate = new Date('2016-03-20');
+
+        d3.json(`/api/Risk?fromDate=${fromDate.toDateString()}&toDate=${toDate.toDateString()}`, function (err, data) {
             map.addSource('riskGeoJson', {
                 type: 'geojson',
                 data: data
@@ -144,26 +194,20 @@
                 }
             }, 'points');
 
-
-            $('#slider input')
-                .attr('min', Date.parse(earliestDate))
-                .attr('max', Date.parse(latestDate))
-                .attr('step', 86400000);
-
-            $('#slider input').on('input', function () {
-                var selectedDateValue = $('#slider input')[0].value;
-                selectedDate = new Date(+selectedDateValue);
-
-                filterByDate(selectedDate);
-            });
-
-            filterByDate(earliestDate);
-
+            setSliderEvent();
+            setSliderValues(fromDate, toDate);
+            setDatePickerValues(fromDate, toDate);
+            filterByDate(fromDate);
 
             var bounds = geojsonExtent(data);
             map.fitBounds(bounds, { padding: 50 });
 
         });
+
+
+
+    });
+
 
     });
 </script>
