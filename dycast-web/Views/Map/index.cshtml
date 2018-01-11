@@ -30,132 +30,133 @@
 </div>
 
 
+@section Scripts {
+    <script>
+        mapboxgl.accessToken = '@ViewData["MapboxAccessToken"]';
 
-<script>
-    mapboxgl.accessToken = '@ViewData["MapboxAccessToken"]';
-
-    var map = new mapboxgl.Map({
-        container: 'map',
-        center: [-45.81495207762998, -21.694545860417424],
-        zoom: 13,
-        style: 'mapbox://styles/mapbox/outdoors-v9'
-    });
-
-
-    function filterByDate(date) {
-        dateString = moment(date).format('YYYY-MM-DD');
-        var filter = ['==', 'date', dateString];
-        map.setFilter('points', filter);
-        $('#sliderHeader').html(dateString);
-    }
-
-
-    function setSliderEvent() {
-        $('#slider input').on('input', function () {
-            var selectedDateValue = $('#slider input')[0].value;
-            selectedDate = new Date(+selectedDateValue);
-
-            filterByDate(selectedDate);
-        });
-    }
-
-
-    function setSliderValues(fromDate, toDate) {
-        $('#slider input')
-            .attr('min', Date.parse(fromDate))
-            .attr('max', Date.parse(toDate))
-            .attr('step', 86400000);
-    }
-
-
-    function setDatePickerValues(fromDate, toDate) {
-        $('#fromDate').val(moment(fromDate).format('YYYY-MM-DD'));
-        $('#toDate').val(moment(toDate).format('YYYY-MM-DD'));
-    }
-
-
-    function updateMap() {
-        var fromDate = new Date($('#fromDate').val());
-        var toDate = new Date($('#toDate').val());
-
-        $('.throbber').show();
-        d3.json(`/api/Risk?fromDate=${fromDate.toDateString()}&toDate=${toDate.toDateString()}`, function (err, data) {
-            const source = map.getSource('riskGeoJson');
-            source.setData(data);
-            var bounds = geojsonExtent(data);
-            map.fitBounds(bounds, { padding: 50 });
-        });
-        setSliderValues(fromDate, toDate);
-        filterByDate(fromDate);
-    }
-
-
-
-    // Map events
-
-    map.on('click', function (e) {
-        var features = map.queryRenderedFeatures(e.point, {
-            layers: ['points']
+        var map = new mapboxgl.Map({
+            container: 'map',
+            center: [16.5290012, 18.6094458],
+            zoom: 13,
+            style: 'mapbox://styles/mapbox/outdoors-v9'
         });
 
-        if (!features.length) {
-            return
+
+        function filterByDate(date) {
+            dateString = moment(date).format('YYYY-MM-DD');
+            var filter = ['==', 'date', dateString];
+            map.setFilter('points', filter);
+            $('#sliderHeader').html(dateString);
         }
 
-        var feature = features[0];
 
-        var popup = new mapboxgl.Popup({ offset: [0, -15] })
-            .setLngLat(feature.geometry.coordinates)
-            .setHTML('<h3>' + feature.properties.date + '</h3>' +
-            '<p>p-value: ' + feature.properties.pValue + '</p>')
-            .addTo(map);
-    });
+        function setSliderEvent() {
+            $('#slider input').on('input', function () {
+                var selectedDateValue = $('#slider input')[0].value;
+                selectedDate = new Date(+selectedDateValue);
 
-
-    map.on('load', function () {
-
-        var fromDate = new Date('2016-03-09');
-        var toDate = new Date('2016-03-20');
-
-        $('.throbber').show();
-
-        d3.json(`/api/Risk?fromDate=${fromDate.toDateString()}&toDate=${toDate.toDateString()}`, function (err, data) {
-            map.addSource('riskGeoJson', {
-                type: 'geojson',
-                data: data
+                filterByDate(selectedDate);
             });
+        }
 
-            map.addLayer({
-                'id': 'points',
-                'type': 'circle',
-                'source': 'riskGeoJson',
-                'paint': {
-                    'circle-color': {
-                        property: 'pValue',
-                        stops: [
-                            [0.00001, '#FC0908'],
-                            [1, '#FCA107']
-                        ]
-                    },
-                    'circle-opacity': 0.75,
-                    'circle-radius': 5
-                }
+
+        function setSliderValues(fromDate, toDate) {
+            $('#slider input')
+                .attr('min', Date.parse(fromDate))
+                .attr('max', Date.parse(toDate))
+                .attr('step', 86400000);
+        }
+
+
+        function setDatePickerValues(fromDate, toDate) {
+            $('#fromDate').val(moment(fromDate).format('YYYY-MM-DD'));
+            $('#toDate').val(moment(toDate).format('YYYY-MM-DD'));
+        }
+
+
+        function updateMap() {
+            var fromDate = new Date($('#fromDate').val());
+            var toDate = new Date($('#toDate').val());
+
+            $('.throbber').show();
+            d3.json(`/api/Risk?fromDate=${fromDate.toDateString()}&toDate=${toDate.toDateString()}`, function (err, data) {
+                const source = map.getSource('riskGeoJson');
+                source.setData(data);
+                var bounds = geojsonExtent(data);
+                map.fitBounds(bounds, { padding: 50 });
             });
-
-            setSliderEvent();
             setSliderValues(fromDate, toDate);
-            setDatePickerValues(fromDate, toDate);
             filterByDate(fromDate);
-
-            var bounds = geojsonExtent(data);
-            map.fitBounds(bounds, { padding: 50 });
-        });
-    });
-
-
-    map.on('data', function (data) {
-        if (data.dataType === 'source' && data.isSourceLoaded) {
-            $('#throbber').hide();
         }
-    });
-</script>
+
+
+
+        // Map events
+
+        map.on('click', function (e) {
+            var features = map.queryRenderedFeatures(e.point, {
+                layers: ['points']
+            });
+
+            if (!features.length) {
+                return
+            }
+
+            var feature = features[0];
+
+            var popup = new mapboxgl.Popup({ offset: [0, -15] })
+                .setLngLat(feature.geometry.coordinates)
+                .setHTML('<h3>' + feature.properties.date + '</h3>' +
+                '<p>p-value: ' + feature.properties.pValue + '</p>')
+                .addTo(map);
+        });
+
+
+        map.on('load', function () {
+
+            var fromDate = new Date('2016-03-09');
+            var toDate = new Date('2016-03-20');
+
+            $('.throbber').show();
+
+            d3.json(`/api/Risk?fromDate=${fromDate.toDateString()}&toDate=${toDate.toDateString()}`, function (err, data) {
+                map.addSource('riskGeoJson', {
+                    type: 'geojson',
+                    data: data
+                });
+
+                map.addLayer({
+                    'id': 'points',
+                    'type': 'circle',
+                    'source': 'riskGeoJson',
+                    'paint': {
+                        'circle-color': {
+                            property: 'pValue',
+                            stops: [
+                                [0.00001, '#FC0908'],
+                                [1, '#FCA107']
+                            ]
+                        },
+                        'circle-opacity': 0.75,
+                        'circle-radius': 5
+                    }
+                });
+
+                setSliderEvent();
+                setSliderValues(fromDate, toDate);
+                setDatePickerValues(fromDate, toDate);
+                filterByDate(fromDate);
+
+                var bounds = geojsonExtent(data);
+                map.fitBounds(bounds, { padding: 50 });
+            });
+        });
+
+
+        map.on('data', function (data) {
+            if (data.dataType === 'source' && data.isSourceLoaded) {
+                $('#throbber').hide();
+            }
+        });
+    </script>
+}
