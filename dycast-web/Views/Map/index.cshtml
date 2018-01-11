@@ -125,12 +125,6 @@
                 data: data
             });
 
-            // Separate source is required for heatmap, in order to fix bug with click event
-            map.addSource('riskGeoJson2', {
-                type: 'geojson',
-                data: data
-            });
-
             map.addLayer({
                 'id': 'points',
                 'type': 'circle',
@@ -147,56 +141,6 @@
                     'circle-radius': 5
                 }
             });
-
-
-            map.addLayer({
-                'id': 'heatmap',
-                'type': 'heatmap',
-                'source': 'riskGeoJson2',
-                'paint': {
-                    //Increase the heatmap weight based on frequency and property pValue
-                    'heatmap-weight': {
-                        'property': 'pValue',
-                        'type': 'exponential',
-                        'stops': [
-                            [0, 1],
-                            [1, 0]
-                        ]
-                    },
-                    //Increase the heatmap color weight weight by zoom level
-                    //heatmap-intensity is a multiplier on top of heatmap-weight
-                    "heatmap-intensity": {
-                        "stops": [
-                            [0, 1],
-                            [1, 1]
-                        ]
-                    },
-                    //Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
-                    //Begin color ramp at 0-stop with a 0-transparancy color
-                    //to create a blur-like effect.
-                    "heatmap-color": {
-                        "stops": [
-                            [0.00001, '#FC0908'],
-                            [1, '#FCA107']
-                        ]
-                    },
-                    //Adjust the heatmap radius by zoom level
-                    "heatmap-radius": {
-                        "stops": [
-                            [0, 2],
-                            [9, 20]
-                        ]
-                    },
-                    //Transition from heatmap to circle layer by zoom level
-                    "heatmap-opacity": {
-                        "default": 0.02,
-                        "stops": [
-                            [1, 0],
-                            [9, 1]
-                        ]
-                    },
-                }
-            }, 'points');
 
             setSliderEvent();
             setSliderValues(fromDate, toDate);
