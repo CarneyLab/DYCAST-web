@@ -83,7 +83,8 @@
             $('#slider input')
                 .attr('min', Date.parse(fromDate))
                 .attr('max', Date.parse(toDate))
-                .attr('step', 86400000);
+                .attr('step', 86400000)
+                .val(Date.parse(fromDate));
         }
 
 
