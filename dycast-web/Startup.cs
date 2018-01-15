@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using dycast_web.Data;
 using dycast_web.Models;
 using dycast_web.Services;
+using System;
 
 namespace dycast_web
 {
@@ -26,7 +27,7 @@ namespace dycast_web
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddEntityFrameworkNpgsql().AddDbContext<DycastDbContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("DycastConnection")));
+                options.UseNpgsql(Environment.ExpandEnvironmentVariables(Configuration.GetConnectionString("DycastConnection"))));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()

@@ -8,3 +8,6 @@ services:
       dockerfile: Dockerfile
     environment:
     - MAPBOX_ACCESS_TOKEN=
+    - DYCAST_DB_HOST=
+    - DYCAST_DB_USER=
+    - DYCAST_DB_PASSWORD=
