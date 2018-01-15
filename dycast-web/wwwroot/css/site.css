@@ -52,3 +52,23 @@ body {
     bottom: 0;
     right: 0;
 }
+
+.legend {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.legendItem {
+    margin: 10px;
+    width: 10vw;
+
+}
+
+.pValueBar {
+    height: 20px;
+    background: linear-gradient(to right, #FC0908, #FCA107);
+}
+
+.pValueBar p {
+    color: aliceblue;
+}

@@ -12,7 +12,7 @@
     ViewData["Title"] = "Dycast Map";
 }
 
-<div style="margin-top: 10vh; text-align: center">
+<div style="margin-top: 2vh; text-align: center">
     <div style="margin-bottom: 10px;">
         <h2 class="title">@ViewData["Title"]</h2>
         <input id="fromDate" type="date" value="" />
@@ -24,7 +24,26 @@
         <img class="throbber" id="throbber" src="~/images/throbber.gif" style="display: none;" />
     </div>
     <div id="slider">
-        <h3 id="sliderHeader">Loading data...</h3>
+        <div class="legend">
+            <table>
+                <tr>
+                    <td>
+                        <div class="legendItem">
+                            <p id="sliderHeader">Loading data...</p>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="legendItem">
+                            <p>Risk (high to low)</p>
+                            <div class="pValueBar">
+                                <p style="float: left; margin-left: 4px;"><sup>0</sup></p>
+                                <p style="float: right; margin-right: 4px;"><sup>1</sup></p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
         <input type="range" min="1" max="100" step="1" />
     </div>
 </div>
@@ -107,7 +126,7 @@
             var popup = new mapboxgl.Popup({ offset: [0, -15] })
                 .setLngLat(feature.geometry.coordinates)
                 .setHTML('<h3>' + feature.properties.date + '</h3>' +
-                '<p>p-value: ' + feature.properties.pValue + '</p>')
+                '<p>P-value: ' + feature.properties.pValue + '</p>')
                 .addTo(map);
         });
 
