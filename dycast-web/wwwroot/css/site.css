@@ -42,6 +42,10 @@ body {
     font-family: 'Roboto Slab', serif;
 }
 
+.mapboxgl-popup-content p {
+    margin: 0px;
+}
+
 .throbber {
     height: 5vw;
     position: fixed;
