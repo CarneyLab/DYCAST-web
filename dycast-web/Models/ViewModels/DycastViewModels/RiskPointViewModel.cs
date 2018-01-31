@@ -8,6 +8,8 @@ namespace dycast_web.Models.ViewModels.DycastViewModels
     public class RiskPointViewModel
     {
         public DateTime RiskDate { get; set; }
+        public double LatOriginal { get; set; }
+        public double LongOriginal { get; set; }
         public double Lat { get; set; }
         public double Long { get; set; }
         public int NumCases { get; set; }
@@ -26,6 +28,10 @@ namespace dycast_web.Models.ViewModels.DycastViewModels
                 {
                     { "date", RiskDate.ToString("yyyy-MM-dd") },
                     { "pValue", PValue },
+                    { "latOriginal", LatOriginal },
+                    { "longOriginal", LongOriginal },
+                    { "lat", Lat },
+                    { "long", Long },
                     //{ "numCases", NumCases },
                     //{ "closePairs", ClosePairs },
                     //{ "closeSpace", CloseSpace },

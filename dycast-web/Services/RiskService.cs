@@ -34,8 +34,8 @@ namespace dycast_web.Services
             var points = await _context.Risk.Select(r => new RiskPointViewModel
             {
                 RiskDate = r.RiskDate,
-                Lat = r.Lat,
-                Long = r.Long,
+                LatOriginal = r.Lat,
+                LongOriginal = r.Long,
                 PValue = r.CumulativeProbability,
                 //ClosePairs = r.ClosePairs,
                 //CloseSpace = r.CloseSpace,
@@ -62,8 +62,8 @@ namespace dycast_web.Services
             foreach (var riskpoint in riskPoints)
             {
                 var pointsArray = new double[2];
-                pointsArray[0] = riskpoint.Lat;
-                pointsArray[1] = riskpoint.Long;
+                pointsArray[0] = riskpoint.LatOriginal;
+                pointsArray[1] = riskpoint.LongOriginal;
 
                 double[] z = { 0 };
 

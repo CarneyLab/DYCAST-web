@@ -127,7 +127,12 @@
             var popup = new mapboxgl.Popup({ offset: [0, -15] })
                 .setLngLat(feature.geometry.coordinates)
                 .setHTML('<h3>' + feature.properties.date + '</h3>' +
-                '<p>P-value: ' + feature.properties.pValue + '</p>')
+                '<p>P-value: ' + feature.properties.pValue + '</p>' +
+                '<p>Latitude: ' + feature.properties.lat + '</p>' +
+                '<p>Longitude: ' + feature.properties.long + '</p>' +
+                '<p>Latitude (Original): ' + feature.properties.latOriginal + '</p>' +
+                '<p>Longitude (Original): ' + feature.properties.longOriginal + '</p>'
+                )
                 .addTo(map);
         });
 
