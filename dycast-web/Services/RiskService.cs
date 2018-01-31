@@ -36,7 +36,7 @@ namespace dycast_web.Services
                 RiskDate = r.RiskDate,
                 Lat = r.Lat,
                 Long = r.Long,
-                PValue = r.Nmcm,
+                PValue = r.CumulativeProbability,
                 //ClosePairs = r.ClosePairs,
                 //CloseSpace = r.CloseSpace,
                 //CloseTime = r.CloseTime,
