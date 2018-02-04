@@ -23,12 +23,18 @@ namespace dycast_web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            // Db contexts 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddEntityFrameworkNpgsql().AddDbContext<DycastDbContext>(options =>
-                options.UseNpgsql(Environment.ExpandEnvironmentVariables(Configuration.GetConnectionString("DycastConnection"))));
+            var dycastConnectionString = Environment.ExpandEnvironmentVariables(Configuration.GetConnectionString("DycastConnection"));
 
+            services.AddEntityFrameworkNpgsql().AddDbContext<DycastDbContext>(options =>
+                options.UseNpgsql(dycastConnectionString));
+
+
+            // Identity
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
@@ -38,8 +44,11 @@ namespace dycast_web
 
             services.AddMvc();
 
-            //Settings
+            // Settings
             services.Configure<MapboxSettings>(Configuration.GetSection("Mapbox"));
+
+            // Services
+            services.AddScoped<IRiskService, RiskService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

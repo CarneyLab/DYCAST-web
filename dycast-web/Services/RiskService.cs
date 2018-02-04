@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace dycast_web.Services
 {
-    public class RiskService
+    public class RiskService : IRiskService
     {
         private readonly DycastDbContext _context;
         private readonly ProjectionInfo _projectionFrom;
@@ -57,7 +57,7 @@ namespace dycast_web.Services
         }
 
 
-        public List<RiskPointViewModel> ReprojectPoints(List<RiskPointViewModel> riskPoints)
+        private List<RiskPointViewModel> ReprojectPoints(List<RiskPointViewModel> riskPoints)
         {
             foreach (var riskpoint in riskPoints)
             {

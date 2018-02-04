@@ -15,10 +15,11 @@ namespace dycast_web.Controllers
     public class RiskController : Controller
     {
         private readonly DycastDbContext _context;
+        private readonly IRiskService _riskService;
 
-        public RiskController(DycastDbContext context)
+        public RiskController(IRiskService riskService)
         {
-            _context = context;
+            _riskService = riskService;
         }
 
 
@@ -31,17 +32,15 @@ namespace dycast_web.Controllers
                 return BadRequest(ModelState);
             }
 
-            var riskService = new RiskService(_context);
             var risk = new FeatureCollection();
-
 
             if (fromDate != null && toDate != null)
             {
-                risk = await riskService.GetRisk(fromDate, toDate);
+                risk = await _riskService.GetRisk(fromDate, toDate);
             }
             else
             {
-                risk = await riskService.GetRisk();
+                risk = await _riskService.GetRisk();
             }
 
             if (risk == null)
