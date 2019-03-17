@@ -233,3 +233,4 @@ _Pvt_Extensions
 # FAKE - F# Make
 .fake/
 docker-compose.override.yml
+dycast-web/wwwroot/css/site.min.css
