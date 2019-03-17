@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using NpgsqlTypes;
 
 namespace dycast_web.Models.Entities

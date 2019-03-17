@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using dycast_web.Models;
+﻿using Microsoft.EntityFrameworkCore;
 using dycast_web.Models.Entities;
 
 namespace dycast_web.Data
@@ -16,8 +10,6 @@ namespace dycast_web.Data
         public virtual DbSet<DistributionMargins> DistributionMargins { get; set; }
         public virtual DbSet<Risk> Risk { get; set; }
         public virtual DbSet<SpatialRefSys> SpatialRefSys { get; set; }
-
-        // Unable to generate entity type for table 'public.dist_margs'. Please see the warning messages.
 
 
         public DycastDbContext(DbContextOptions<DycastDbContext> options)

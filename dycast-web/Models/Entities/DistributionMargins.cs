@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace dycast_web.Models.Entities
+﻿namespace dycast_web.Models.Entities
 {
     public partial class DistributionMargins
     {
