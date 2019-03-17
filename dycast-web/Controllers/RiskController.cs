@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using dycast_web.Data;
 using dycast_web.Services;
 using GeoJSON.Net.Feature;
-using System.Net.Http;
-using System.Net;
-using System.Net.Http.Headers;
 
 namespace dycast_web.Controllers
 {
@@ -14,7 +10,6 @@ namespace dycast_web.Controllers
     [Route("api/Risk")]
     public class RiskController : Controller
     {
-        private readonly DycastDbContext _context;
         private readonly IRiskService _riskService;
 
         public RiskController(IRiskService riskService)
@@ -32,7 +27,7 @@ namespace dycast_web.Controllers
                 return BadRequest(ModelState);
             }
 
-            var risk = new FeatureCollection();
+            FeatureCollection risk;
 
             if (fromDate != null && toDate != null)
             {
